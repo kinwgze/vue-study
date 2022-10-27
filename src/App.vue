@@ -1,97 +1,25 @@
-<!--
 <template>
   <div class="container">
     我是根组件
-  </div>
-</template>
-<script>
-export default {
-  name: 'App'
-}
-</script>
--->
-
-<!--选项api
-<template>
-  <div class="container">
-    <div>鼠标位置：</div>
-    <div>X轴：{{x}}</div>
-    <div>Y轴：{{y}}</div>
-    <hr>
-    <div>{{count}} <button @click="add()">自增</button></div>
+    <h2 @click="say()">{{msg}}</h2>
   </div>
 </template>
 <script>
 export default {
   name: 'App',
-  data () {
-    return {
-      x: 0,
-      y: 0,
-      count: 0
-    }
-  },
-  mounted() {
-    document.addEventListener('mousemove', this.move)
-  },
-  methods: {
-    move(e) {
-      this.x = e.pageX
-      this.y = e.pageY
-    },
-    add () {
-      this.count++
-    }
-  },
-  destroyed() {
-    document.removeEventListener('mousemove', this.move)
-  }
-}
-</script>-->
-
-<!--组合api-->
-<template>
-  <div class="container">
-    <div>鼠标位置：</div>
-    <div>X轴：{{x}}</div>
-    <div>Y轴：{{y}}</div>
-    <hr>
-    <div>{{count}} <button @click="add()">自增</button></div>
-  </div>
-</template>
-<script>
-import { onMounted, onUnmounted, reactive, ref, toRefs } from 'vue'
-export default {
-  name: 'App',
+  // 1. 组合API的起点，基本上所有的组合api代码都在里面写
+  // 2. 在组件实例创建前执行
+  // 3. setup中不能用this，此时的this是undefined
+  // 4. 模板中需要使用的数据和函数，需要在setup中返回
   setup () {
-    // 鼠标移动逻辑
-    const mouse = reactive({
-      x: 0,
-      y: 0
-    })
-    const move = e => {
-      mouse.x = e.pageX
-      mouse.y = e.pageY
-    }
-    onMounted(()=>{
-      document.addEventListener('mousemove',move)
-    })
-    onUnmounted(()=>{
-      document.removeEventListener('mousemove',move)
-    })
+    console.log(this)
+    const msg = 'hello vue3'
 
-    // 累加逻辑
-    const count = ref(0)
-    const add = () => {
-      count.value ++
+    const say = () => {
+      console.log('hello vue3.2')
     }
+    return {msg , say}
 
-    // 返回数据
-    return {
-      ...toRefs(mouse),
-      count,
-      add
-    }
   }
 }
 </script>
