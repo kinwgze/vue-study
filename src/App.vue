@@ -1,25 +1,38 @@
 <template>
   <div class="container">
-    我是根组件
-    <h2 @click="say()">{{msg}}</h2>
+    <div>{{name}}</div>
+    <div>{{age}}</div>
+    <button @click="updateName">修改数据</button>
   </div>
 </template>
 <script>
+import { reactive, toRefs } from 'vue'
 export default {
   name: 'App',
-  // 1. 组合API的起点，基本上所有的组合api代码都在里面写
-  // 2. 在组件实例创建前执行
-  // 3. setup中不能用this，此时的this是undefined
-  // 4. 模板中需要使用的数据和函数，需要在setup中返回
   setup () {
-    console.log(this)
-    const msg = 'hello vue3'
+    // 1. 响应式数据对象
+    const obj = reactive({
+      name: 'ls',
+      age: 10
+    })
+    console.log(obj)
+    // 2. 解构或者展开响应式数据对象
+    // const {name,age} = obj
+    // console.log(name,age)
+    // const obj2 = {...obj}
+    // console.log(obj2)
+    // 以上方式导致数据就不是响应式数据了
+    const obj3 = toRefs(obj)
+    console.log(obj3)
 
-    const say = () => {
-      console.log('hello vue3.2')
+    const updateName = () => {
+      // obj3.name.value = 'zs'
+      // 不仅可以修改转换之后对象的值，还可以修改转换之前对象的值，他们都是一样的，互通的
+      obj.name = 'zs'
     }
-    return {msg , say}
 
+    return {...obj3, updateName}
   }
 }
 </script>
+<style scoped lang="less"></style>
