@@ -2,37 +2,22 @@
   <div class="container">
     <div>{{name}}</div>
     <div>{{age}}</div>
-    <button @click="updateName">修改数据</button>
   </div>
 </template>
 <script>
-import { reactive, toRefs } from 'vue'
+import {ref} from "vue";
+
 export default {
   name: 'App',
-  setup () {
-    // 1. 响应式数据对象
-    const obj = reactive({
-      name: 'ls',
-      age: 10
-    })
-    console.log(obj)
-    // 2. 解构或者展开响应式数据对象
-    // const {name,age} = obj
-    // console.log(name,age)
-    // const obj2 = {...obj}
-    // console.log(obj2)
-    // 以上方式导致数据就不是响应式数据了
-    const obj3 = toRefs(obj)
-    console.log(obj3)
+  setup() {
+    const name = ref('ls')
+    console.log(name)
+    const age = ref(10)
 
-    const updateName = () => {
-      // obj3.name.value = 'zs'
-      // 不仅可以修改转换之后对象的值，还可以修改转换之前对象的值，他们都是一样的，互通的
-      obj.name = 'zs'
-    }
-
-    return {...obj3, updateName}
+    // ref常用于定义简单数据类型的响应式数据，也可以定义复杂类型的响应式数据
+    // 当要定义的响应式数据类型未知时，使用ref
+    const data = ref(null)
+    return {name, age}
   }
 }
 </script>
-<style scoped lang="less"></style>
