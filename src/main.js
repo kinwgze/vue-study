@@ -1,12 +1,17 @@
-// 主要职责：创建一个vue应用
-// 1. 导入createApp函数，从vue中
-// 2. 创建一个跟组件App.vue，导入至main
-// 3. 使用createApp创建应用实例
-// 4. 应用实例挂载到#app容器中
-
-
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
-const app = createApp(App)
-app.mount('#app')
+import router from './router'
+import store from './store'
 
+// 导入自己UI组件库
+import UI from '@/components/library'
+
+// 1. 重置样式的库
+import 'normalize.css'
+// 2. 自己项目的重置样式和公用样式
+import '@/assets/styles/common.less'
+
+// mockjs
+import '@/mock'
+
+createApp(App).use(store).use(router).use(UI).mount('#app')
